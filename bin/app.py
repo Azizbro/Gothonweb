@@ -12,7 +12,7 @@ render = web.template.render('templates/', base="layout")
 class Index(object):
     def GET(self):
         # the GET function runs first and returns the hello_form
-        return render.hello_form()
+        return render.hello_form_laid_out()
 
     def POST(self):
         # instead of just a string we're now using web.input to get data
@@ -25,7 +25,7 @@ class Index(object):
             # Shows that the name of the function you call on render is just
             # matched to a .html file in templates/
             # everything else can refer to index
-            return render.index(greeting = greeting)
+            return render.index_laid_out(greeting = greeting)
         else:
             return "ERROR: greet is required"
 
