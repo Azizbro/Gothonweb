@@ -1,9 +1,10 @@
 from nose.tools import *
+# imported t he application and ran it directly for the automated test
 from bin.app import app
 from tests.tools import assert_response
 
 def test_index():
-    # check that we get a 404 on the / URL
+    # check that we get a 404 on the / URL because it actually doesn't exist
     resp = app.request("/")
     assert_response(resp, status='404')
 
@@ -18,4 +19,4 @@ def test_index():
     # test that we get expected values
     data = {'name': 'Zed', 'greet': 'Hola'}
     resp = app.request("/hello", method="POST", data=data)
-    assert_response(resp, contains='Zed')
+    assert_response(resp, contains='Hola')
