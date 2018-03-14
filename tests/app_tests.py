@@ -13,7 +13,6 @@ def test_index():
 
     # make sure default values work for the form
     resp = app.request("/hello", method="POST")
-    print resp.data
     assert_response(resp, contains="Nobody")
 
     # test that we get expected values

@@ -20,14 +20,11 @@ class Index(object):
         # URL you give it, and then returns an object for you to use
         form = web.input(name="Nobody", greet=None)
 
-        if form.greet:
-            greeting = "%s, %s" % (form.greet, form.name)
-            # Shows that the name of the function you call on render is just
-            # matched to a .html file in templates/
-            # everything else can refer to index
-            return render.index_laid_out(greeting = greeting)
-        else:
-            return "ERROR: greet is required"
+        greeting = "%s, %s" % (form.greet, form.name)
+        # Shows that the name of the function you call on render is just
+        # matched to a .html file in templates/
+        # everything else can refer to index
+        return render.index_laid_out(greeting = greeting)
 
 if __name__ == "__main__":
     app.run()
