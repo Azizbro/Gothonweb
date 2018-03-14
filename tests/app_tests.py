@@ -12,8 +12,9 @@ def test_index():
     assert_response(resp)
 
     # make sure default values work for the form
-    resp = app.request("/hello")
-    assert_response(resp, contains='Nobody')
+    resp = app.request("/hello", method="POST")
+    print resp.data
+    assert_response(resp, contains="Nobody")
 
     # test that we get expected values
     data = {'name': 'Zed', 'greet': 'Hola'}
