@@ -1,9 +1,11 @@
 <h1>Fill Out This Form</h1>
 
-<form action="/hello" method="POST">
-  A Greeting: <input type="text" name="greet">
+<form action="/hello" method="POST" enctype="multipart/form-data" action="">
+  A Greeting: <input type="text" name="greet"/>
   <br/>
-  Your Name: <input type="text" name="name">
+  Your Name: <input type="text" name="name"/>
+  <br/>
+  Your File: <input type="file" name="myfile"/>
   <br/>
   <input type="submit">
 </form>

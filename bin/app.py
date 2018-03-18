@@ -18,7 +18,18 @@ class Index(object):
         # instead of just a string we're now using web.input to get data
         # from the browser. This func parses the ?name=Frank part of the
         # URL you give it, and then returns an object for you to use
-        form = web.input(name="Nobody", greet=None)
+        form = web.input(name="Nobody", greet=None, myfile={})
+
+        # Uploading a file
+        # Where you want to store the file in
+        filedir = 'C:\Users\Zarif\OneDrive\Documents\Python Projects\gothonweb'
+        # To check if the file-object is created
+        if 'myfile' in form:
+            filepath= form.myfile.filename.replace('\\','/') # replaces the windows-style slashes with linux ones.
+            filename= filepath.split('/')[-1] # splits the / and chooses the last part (the filename with extension)
+            fout = open(filedir +'/'+ filename,'w') # creates the file where the uploaded file should be stored
+            fout.write(form.myfile.file.read()) # writes the uploaded file to the newly created file.
+            fout.close() # closes the file, upload complete.
 
         greeting = "%s, %s" % (form.greet, form.name)
         # Shows that the name of the function you call on render is just
@@ -27,4 +38,5 @@ class Index(object):
         return render.index_laid_out(greeting = greeting)
 
 if __name__ == "__main__":
+    app = web.application(urls, globals())
     app.run()
