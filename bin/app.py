@@ -3,6 +3,10 @@ import web
 urls = (
     '/hello', 'Index',
     '/upload', 'Upload',
+    # trying out sessions
+    '/state', 'State',
+    '/login', 'Login',
+    '/logout', 'Logout'
 )
 
 app = web.application(urls, globals())
@@ -29,6 +33,10 @@ class Index(object):
         # everything else can refer to index
         return render.index_laid_out(greeting = greeting)
 
+
+# ---------------------UPLOADING FILE -----------------------------
+
+
 class Upload(object):
     def GET(self):
         return render.upload_form()
@@ -53,7 +61,34 @@ class Upload(object):
         # Go to another web page where you have the output message
         return render.upload()
 
+
+#------------------ SESSIONS ------------------------------------
+
+
+# Hack to make session play nice with the reloader (in debug mode)
+if web.config.get('_session') is None:
+    session = web.session.Session(app, web.session.DiskStore('sessions'))
+    web.config._session = session
+else:
+    session = web.config._session
+
+class State(object):
+    def GET(self):
+        # 'False' is the value to be returned in case key doesn't exist
+        if session.get('logged_in', False):
+            return '<h1>You are logged in</h1><a href="/logout">Logout</a>'
+        return '<h1>You are not logged in.</h1><a href="/login">Login now</a>'
+
+class Login:
+    def GET(self):
+        session.logged_in = True
+        raise web.seeother('/state')
+
+class Logout:
+    def GET(self):
+        session.logged_in = False
+        raise web.seeother('/state')
+
 # What does this mean?
 if __name__ == "__main__":
-    app = web.application(urls, globals())
     app.run()
